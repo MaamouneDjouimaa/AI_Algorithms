@@ -1,0 +1,27 @@
+graph = {'A': ['B', 'C'],
+         'B': ['A', 'C', 'D'],
+         'C': ['A', 'B', 'E'],
+         'D': ['B', 'E', 'F'],
+         'E': ['C', 'D'],
+         'F': ['D']}
+
+def dfs(graph, start, end):
+    explored = []
+    frontier = []
+
+    frontier.append(start)
+    explored.append(start)
+
+    while frontier:
+        s = frontier.pop()
+        print('Processing ', s)
+
+        if s == end:
+            break
+
+        for v in graph[s]:
+            if v not in explored:
+                frontier.append(v)
+                explored.append(v)
+
+dfs(graph, 'A', 'F')

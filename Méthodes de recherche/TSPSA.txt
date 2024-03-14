@@ -1,0 +1,21 @@
+import random
+import math
+
+def simulated_annealing(problem, T=10000, alpha=0.95, stopping_temp=1e-10, max_steps=1000):
+    current_state = problem.initial_state()
+    current_energy = problem.energy(current_state)
+    steps = 0
+
+    while T > stopping_temp and steps < max_steps:
+        next_state = problem.random_neighbor(current_state)
+        next_energy = problem.energy(next_state)
+
+        delta_e = next_energy - current_energy
+        if random.uniform(0, 1) < math.exp(-delta_e / T):
+            current_state = next_state
+            current_energy = next_energy
+
+        T = T * alpha
+        steps += 1
+
+    return current_state

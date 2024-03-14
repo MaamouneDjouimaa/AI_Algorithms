@@ -1,0 +1,31 @@
+graph = {'A': [('B', 1), ('C', 2)],
+         'B': [('A', 1), ('C', 3), ('D', 4)],
+         'C': [('A', 2), ('B', 3), ('E', 1)],
+         'D': [('B', 4), ('E', 2), ('F', 5)],
+         'E': [('C', 1), ('D', 2)],
+         'F': [('D', 5)]}
+
+def a_star(graph, start, end):
+    explored = []
+    frontier = []
+
+    frontier.append((start, 0))
+    explored.append(start)
+
+    while frontier:
+        s, f = min(frontier, key=lambda x: x[1])
+        frontier.remove((s, f))
+        print('Processing ', s)
+
+        if s == end:
+            break
+
+        for v, w in graph[s]:
+            g = f + w
+            if v not in explored:
+                frontier.append((v, g))
+                explored.append(v)
+
+    return f
+
+a_star(graph, 'A', 'F')
